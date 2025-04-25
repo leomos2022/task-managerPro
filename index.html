@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskManager Pro</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .navbar .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0052cc;
+    }
+    .navbar .nav-links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #0052cc;
+      font-weight: 500;
+    }
+    .navbar .nav-links .btn {
+      background-color: #0052cc;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      transition: background-color 0.3s;
+    }
+    .navbar .nav-links .btn:hover {
+      background-color: #003087;
+    }
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+      background-color: #fff;
+    }
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #172b4d;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #5e6c84;
+      margin-bottom: 30px;
+    }
+    .categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .categories span {
+      background-color: #e6f0fa;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #0052cc;
+      cursor: pointer;
+    }
+    .categories span:hover {
+      background-color: #d0e0fc;
+    }
+    .btn-primary {
+      background-color: #0052cc;
+      color: #fff;
+      padding: 15px 30px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    .btn-primary:hover {
+      background-color: #003087;
+    }
+    .task-section {
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .task-section h2 {
+      font-size: 32px;
+      color: #172b4d;
+      margin-bottom: 20px;
+    }
+    .task-input {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .task-input input {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #dfe1e6;
+      border-radius: 5px;
+      flex-grow: 1;
+    }
+    .task-input button {
+      background-color: #0052cc;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .task-input button:hover {
+      background-color: #003087;
+    }
+    .task-list {
+      list-style: none;
+      padding: 0;
+    }
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .task-item button {
+      background-color: #ff4d4f;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .task-item button:hover {
+      background-color: #d9363e;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">TaskManager Pro</div>
+    <div class="nav-links">
+      <a href="#">Características</a>
+      <a href="#">Contacto</a>
+      <a href="#" class="btn">Comenzar</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Trabaja de forma inteligente con la plataforma de gestión de tareas #1</h1>
+    <p>Planifica, gestiona y sigue todas las tareas de tu equipo en una plataforma flexible.</p>
+    <div class="categories">
+      <span>Gestión de tareas</span>
+      <span>Gestión de proyectos</span>
+      <span>Tareas y pendientes</span>
+      <span>Seguimiento de tiempo</span>
+      <span>Metas y estrategias</span>
+      <span>Operaciones de negocio</span>
+      <span>Proyectos de clientes</span>
+      <span>Gestión de recursos</span>
+      <span>Herramientas de colaboración</span>
+      <span>Crea tu propio flujo</span>
+    </div>
+    <a href="#" class="btn-primary">Comenzar</a>
+  </div>
+
+  <div class="task-section">
+    <h2>Gestiona tus tareas</h2>
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Añade una nueva tarea...">
+      <button onclick="addTask()">Añadir</button>
+    </div>
+    <ul class="task-list" id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const taskText = taskInput.value.trim();
+      if (taskText === '') return;
+
+      const taskList = document.getElementById('taskList');
+      const li = document.createElement('li');
+      li.className = 'task-item';
+      li.innerHTML = `
+        <span>${taskText}</span>
+        <button onclick="removeTask(this)">Eliminar</button>
+      `;
+      taskList.appendChild(li);
+      taskInput.value = '';
+    }
+
+    function removeTask(button) {
+      button.parentElement.remove();
+    }
+
+    document.getElementById('taskInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        addTask();
+      }
+    });
+  </script>
+  <!-- Añade Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Script del gráfico -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('radarChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Funcionalidad', 'Fiabilidad', 'Usabilidad', 'Eficiencia', 'Portabilidad'],
+        datasets: [
+          {
+            label: 'Versión Actual',
+            data: [8, 7, 9, 6, 8],
+            backgroundColor: 'rgba(0, 82, 204, 0.2)',
+            borderColor: 'rgba(0, 82, 204, 1)',
+            borderWidth: 2
+          },
+          {
+            label: 'Con Mejoras',
+            data: [9, 8, 10, 8, 9],
+            backgroundColor: 'rgba(255, 75, 75, 0.2)',
+            borderColor: 'rgba(255, 75, 75, 1)',
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        scales: {
+          r: {
+            angleLines: { display: true },
+            suggestedMin: 0,
+            suggestedMax: 10,
+            ticks: { stepSize: 2 }
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: { size: 14 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              afterLabel: (context) => {
+                const cambios = [
+                  '✅ Integración con Outlook/Gmail\n✅ API pública',
+                  '✅ Validación de entradas\n✅ Recuperación automática',
+                  '✅ Personalización de temas\n✅ Nuevos esquemas de color',
+                  '✅ Código optimizado\n✅ Modo ligero (próximamente)',
+                  '✅ Soporte para Linux\n✅ Versión Electron'
+                ];
+                return 'Mejoras:\n' + cambios[context.dataIndex];
+              }
+            }
+          }
+        }
+      }
+    });
+  });
+</script>
+  <!-- Nueva sección para la evaluación -->
+<div class="evaluation-section" style="padding: 50px 20px; max-width: 1200px; margin: 0 auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <h2 style="font-size: 32px; color: #172b4d; margin-bottom: 20px; text-align: center;">Evaluación de Mejoras</h2>
+    <p style="text-align: center; color: #5e6c84; margin-bottom: 30px;">Comparativa entre la versión actual y las mejoras planificadas</p>
+    
+    <div style="display: flex; justify-content: center;">
+      <div style="width: 600px; height: 400px;">
+        <canvas id="radarChart"></canvas>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
